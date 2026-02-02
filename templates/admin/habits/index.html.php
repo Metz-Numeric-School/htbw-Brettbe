@@ -1,4 +1,4 @@
-<?php $layout = 'base.html.php'; ?>
+<?php $layout = 'admin/base.html.php'; ?>
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Liste des habitudes</h1>
