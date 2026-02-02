@@ -53,7 +53,7 @@ class HabitsController extends AbstractController
                     'description' => htmlspecialchars($habit['description']) ?? null
                 ]);
 
-                header('Location: /habit');
+                header('Location: /habits');
                 exit;
             }
         }
