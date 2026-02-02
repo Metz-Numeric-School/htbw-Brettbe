@@ -19,7 +19,9 @@ abstract class AbstractEntity
     {
         $entity = new static();
         foreach ($data as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            // Convert snake_case to camelCase (e.g., user_id -> userId)
+            $camelCaseKey = str_replace('_', '', ucwords($key, '_'));
+            $method = 'set' . ucfirst($camelCaseKey);
             if (method_exists($entity, $method)) {
                 $entity->$method($value);
             }
