@@ -1,7 +1,7 @@
 <?php
 
 $port = 85;
-$host = "localhost";
+$host = "127.0.0.1";
 
 // Start the server with other port
 $connexion = @fsockopen($host, $port);
