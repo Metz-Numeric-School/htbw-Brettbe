@@ -75,7 +75,7 @@ class HabitsController extends AbstractController
             $this->habitLogRepository->toggleToday($habitId);
         }
 
-        header('Location: /dashboard');
+        header('Location: /habits');
         exit;
     }
 }
