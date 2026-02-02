@@ -18,7 +18,7 @@ class DashboardController extends AbstractController
 
     public function index()
     {
-        $userId = $_SESSION['user']['id'];
+        $userId = htmlspecialchars($_SESSION['user']['id']);
 
         // Statistiques rapides
         $stats = [

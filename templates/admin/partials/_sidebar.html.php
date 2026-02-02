@@ -5,13 +5,13 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li>
-            <a href="/admin/dashboard" class="nav-link <?= $_SESSION['current_uri'] == '/admin/dashboard' ? 'active' : '' ?>">
+            <a href="/admin/dashboard" class="nav-link <?= htmlspecialchars($_SESSION['current_uri']) == '/admin/dashboard' ? 'active' : '' ?>">
                 <i class="bi bi-speedometer2 me-2"></i>
                 Dashboard
             </a>
         </li>
         <li>
-            <a href="/admin/user" class="nav-link <?= $_SESSION['current_uri'] == '/admin/user' ? 'active' : '' ?>">
+            <a href="/admin/user" class="nav-link <?= htmlspecialchars($_SESSION['current_uri']) == '/admin/user' ? 'active' : '' ?>">
                 <i class="bi bi-people me-2"></i>
                 Utilisateurs
             </a>

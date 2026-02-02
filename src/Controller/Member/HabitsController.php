@@ -22,7 +22,7 @@ class HabitsController extends AbstractController
     public function index()
     {
 
-        $userId = $_SESSION['user']['id'];
+        $userId = htmlspecialchars($_SESSION['user']['id']);
         $habits = $this->habitRepository->findByUser($userId);
 
         return $this->render('member/habits/index.html.php', [
@@ -48,9 +48,9 @@ class HabitsController extends AbstractController
 
             if (count($errors) === 0) {
                 $this->habitRepository->insert([
-                    'user_id' => $_SESSION['user']['id'],
-                    'name' => $habit['name'],
-                    'description' => $habit['description'] ?? null
+                    'user_id' => htmlspecialchars($_SESSION['user']['id']),
+                    'name' => htmlspecialchars($habit['name']),
+                    'description' => htmlspecialchars($habit['description']) ?? null
                 ]);
 
                 header('Location: /habit');
@@ -71,7 +71,7 @@ class HabitsController extends AbstractController
     {
 
         if (!empty($_POST['habit_id'])) {
-            $habitId = (int)$_POST['habit_id'];
+            $habitId = (int)htmlspecialchars($_POST['habit_id']);
             $this->habitLogRepository->toggleToday($habitId);
         }
 
