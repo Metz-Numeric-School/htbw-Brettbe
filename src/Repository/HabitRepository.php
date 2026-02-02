@@ -9,20 +9,24 @@ class HabitRepository extends AbstractRepository
 {
     public function findAll()
     {
-        $habits = $this->getConnection()->query("SELECT * FROM habits");
+        $sql = "SELECT * FROM habits";
+        $habits = $this->getConnection()->query($sql);
         return EntityMapper::mapCollection(Habit::class, $habits->fetchAll());
     }
 
     public function find(int $id)
     {
-        $habit = $this->getConnection()->query("SELECT * FROM habits WHERE id = $id");
-        return EntityMapper::map(Habit::class, $habit->fetch());
+        $sql = "SELECT * FROM habits WHERE id = :id";
+        $query = $this->getConnection()->prepare($sql);
+        $query->execute(['id' => $id]);
+        return EntityMapper::map(Habit::class, $query->fetch());
     }
 
     public function findByUser(int $userId)
     {
-        $sql = "SELECT * FROM habits WHERE user_id = $userId";
-        $query = $this->getConnection()->query($sql);
+        $sql = "SELECT * FROM habits WHERE user_id = :user_id";
+        $query = $this->getConnection()->prepare($sql);
+        $query->execute(['user_id' => $userId]);
         return EntityMapper::mapCollection(Habit::class, $query->fetchAll());
     }
 
@@ -31,24 +35,22 @@ class HabitRepository extends AbstractRepository
      */
     public function countByUser(int $userId): int
     {
-        $stmt = $this->getConnection()->prepare("SELECT COUNT(*) as total FROM habits WHERE user_id = :user_id");
-        $stmt->execute(['user_id' => $userId]);
-        $row = $stmt->fetch();
+        $sql = "SELECT COUNT(*) as total FROM habits WHERE user_id = :user_id";
+        $query = $this->getConnection()->prepare($sql);
+        $query->execute(['user_id' => $userId]);
+        $row = $query->fetch();
         return (int)($row['total'] ?? 0);
     }
 
     public function insert(array $data = array())
     {
-        $name = $data['name'];   
+        $name = $data['name'];
         $description = $data['description'];
 
-        // Requête construite par concaténation (vulnérable)
-        $sql = "INSERT INTO habits (user_id, name, description, created_at) VALUES (" 
-            . $data['user_id'] . ", '" 
-            . $name . "', '" 
-            . $description . "', NOW())";
+        $sql = "INSERT INTO habits (user_id, name, description, created_at) VALUES (:user_id, :name, :description, NOW())";
 
-        $query = $this->getConnection()->query($sql);
+        $query = $this->getConnection()->prepare($sql);
+        $query->execute(['user_id' => $data['user_id'], 'name' => $name, 'description' => $description]);
 
         return $this->getConnection()->lastInsertId();
     }
@@ -58,8 +60,6 @@ class HabitRepository extends AbstractRepository
      */
     public function getStreak(int $userId): int
     {
-        $pdo = $this->getConnection();
-
         $sql = "
             SELECT DISTINCT log_date
             FROM habit_logs hl
@@ -68,9 +68,9 @@ class HabitRepository extends AbstractRepository
             ORDER BY log_date DESC
         ";
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute(['user_id' => $userId]);
-        $dates = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+        $query = $this->getConnection()->prepare($sql);
+        $query->execute(['user_id' => $userId]);
+        $dates = $query->fetchAll(\PDO::FETCH_COLUMN);
 
         $streak = 0;
         $today = new \DateTime();
