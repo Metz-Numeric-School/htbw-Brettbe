@@ -33,6 +33,7 @@ class DashboardController extends AbstractController
         return $this->render('member/dashboard/index.html.php', [
             'stats' => $stats,
             'habits' => $habits,
+            'title' => 'User Dashboard'
         ]);
     }
 }

@@ -27,6 +27,7 @@ class HabitsController extends AbstractController
 
         return $this->render('member/habits/index.html.php', [
             'habits' => $habits,
+            'title' => 'Habit Management'
         ]);
     }
 
@@ -58,7 +59,8 @@ class HabitsController extends AbstractController
         }
 
         return $this->render('member/habits/new.html.php', [
-            'errors' => $errors
+            'errors' => $errors,
+            'title' => 'Habit Management'
         ]);
     }
 

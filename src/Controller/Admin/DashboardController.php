@@ -13,7 +13,7 @@ class DashboardController extends AbstractController
     private HabitLogRepository $habitLogRepository;
 
     public function __construct()
-    {   
+    {
         $this->userRepository = new UserRepository();
         $this->habitRepository = new HabitRepository();
         $this->habitLogRepository = new HabitLogRepository();
@@ -34,6 +34,7 @@ class DashboardController extends AbstractController
             'totalUsers' => $totalUsers,
             'totalHabits' => $totalHabits,
             'completedToday' => $completedToday,
+            'title' => 'Admin Dashboard'
         ]);
     }
 }

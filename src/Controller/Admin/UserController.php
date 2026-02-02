@@ -10,7 +10,7 @@ class UserController extends AbstractController
     private UserRepository $userRepository;
 
     public function __construct()
-    {   
+    {
         $this->userRepository = new UserRepository();
     }
 
@@ -20,6 +20,7 @@ class UserController extends AbstractController
         $users = $this->userRepository->findAll();
         return $this->render('admin/user/index.html.php', [
             'users' => $users,
+            'title' => 'User Management'
         ]);
     }
 
@@ -30,7 +31,7 @@ class UserController extends AbstractController
         if(!empty($_POST['user']))
         {
             $user = $_POST['user'];
-            
+
             if(empty($user['lastname']))
                 $errors['lastname'] = 'Le Nom est obligatoire';
 
@@ -43,7 +44,7 @@ class UserController extends AbstractController
             if(empty($user['password']))
                 $errors['password'] = 'Le mot de passe est obligatoire';
 
-            
+
             if(count($errors) == 0)
             {
                 $id = $this->userRepository->insert($user);
@@ -54,6 +55,7 @@ class UserController extends AbstractController
 
         return $this->render('admin/user/new.html.php', [
             'errors' => $errors,
+            'title' => 'User Management'
         ]);
     }
 }
