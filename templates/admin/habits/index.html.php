@@ -12,6 +12,8 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($habit->getName()) ?></h5>
+                            <p class="card-subtitle mb-2 text-muted">
+                                Créée par : <?= htmlspecialchars($habit->getUser()['firstname']) ?> <?= htmlspecialchars($habit->getUser()['lastname']) ?> (<?= htmlspecialchars($habit->getUser()['email']) ?>)
                             <p class="card-text"><?= htmlspecialchars($habit->getDescription()) ?></p>
 
                             <!-- Progression sur 7 jours -->

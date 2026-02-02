@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Entity\AbstractEntity;
+use App\Entity\User;
 use App\Repository\HabitLogRepository;
+use App\Repository\UserRepository;
 
 class Habit extends AbstractEntity
 {
@@ -11,6 +13,9 @@ class Habit extends AbstractEntity
     private $name;
     private $description;
     private $created_at;
+    private $email;
+    private $firstname;
+    private $lastname;
 
     public function getUserId()
     {
@@ -54,6 +59,17 @@ class Habit extends AbstractEntity
     {
         $this->created_at = $created_at;
         return $this;
+    }
+
+    public function getUser()
+    {
+        $sql = "SELECT * FROM mns_user WHERE id = :id";
+        $userRepository = new UserRepository();
+        $stmt = $userRepository->getConnection()->prepare($sql);
+        $stmt->execute(['id' => $this->user_id]);
+        $userData = $stmt->fetch();
+
+        return $userData;
     }
 
     /**
