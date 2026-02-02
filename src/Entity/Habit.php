@@ -13,9 +13,6 @@ class Habit extends AbstractEntity
     private $name;
     private $description;
     private $created_at;
-    private $email;
-    private $firstname;
-    private $lastname;
 
     public function getUserId()
     {
