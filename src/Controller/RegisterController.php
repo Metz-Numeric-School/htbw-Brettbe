@@ -21,7 +21,7 @@ class RegisterController extends AbstractController
         if(!empty($_GET['user'])) {
 
             $user = $_POST['user'];
-            
+
             if(empty($user['lastname']))
                 $errors['lastname'] = 'Le Nom est obligatoire';
 
@@ -38,6 +38,10 @@ class RegisterController extends AbstractController
             if(count($errors) == 0) {
                 // Par défaut l'utilisateur n'est pas admin
                 $user['isadmin'] = 0;
+
+                // Hash du mot de passe
+                $hashedPassword = password_hash($user['password'], PASSWORD_DEFAULT);
+                $user['password'] = $hashedPassword;
 
                 // On persite les informations en BDD
                 $id = $this->userRepository->insert($user);
