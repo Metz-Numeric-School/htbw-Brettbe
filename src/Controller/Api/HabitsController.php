@@ -16,8 +16,18 @@ class HabitsController extends AbstractController
 
     public function index()
     {
+        $habits = $this->habitRepository->findAll();
+        $habitsArray = array_map(function($habit) {
+            return [
+                'id' => $habit->getId(),
+                'user_id' => $habit->getUserId(),
+                'name' => $habit->getName(),
+                'description' => $habit->getDescription(),
+                'created_at' => $habit->getCreatedAt(),
+            ];
+        }, $habits);
         return $this->json([
-            'habits' => $this->habitRepository->findAll()
+            'habits' => $habitsArray
         ]);
     }
 
