@@ -38,47 +38,6 @@
                 <h2>Mes habitudes</h2>
                 <a href="/habits/create" class="btn btn-primary">Ajouter une habitude</a>
             </div>
-
-            <div class="row">
-                <!-- Liste des habitudes -->
-                <?php if (!empty($habits)): ?>
-                    <div class="row">
-                        <?php foreach ($habits as $habit): ?>
-                            <div class="col-md-4 mb-3">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?= htmlspecialchars($habit->getName()) ?></h5>
-                                        <p class="card-text"><?= htmlspecialchars($habit->getDescription()) ?></p>
-
-                                        <form action="/habit/toggle" method="post" class="mb-2">
-                                            <input type="hidden" name="habit_id" value="<?= htmlspecialchars($habit->getId()) ?>">
-                                            <button type="submit"
-                                                class="btn <?= $habit->isCompletedToday() ? 'btn-success' : 'btn-outline-success' ?> btn-sm">
-                                                <?= $habit->isCompletedToday() ? 'Fait ✅' : 'Marquer comme fait' ?>
-                                            </button>
-                                        </form>
-
-                                        <p class="mb-1 text-muted">Progression 7 derniers jours :</p>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar" role="progressbar"
-                                                style="width: <?= htmlspecialchars($habit->getProgress(7)) ?>%;"
-                                                aria-valuenow="<?= htmlspecialchars($habit->getProgress(7)) ?>" aria-valuemin="0" aria-valuemax="100">
-                                                <?= htmlspecialchars($habit->getProgress(7)) ?>%
-                                            </div>
-                                        </div>
-
-                                        <small class="text-muted">
-                                            <?= htmlspecialchars($habit->isCompletedToday() ? 'Habitude faite aujourd’hui' : 'Non faite aujourd’hui') ?>
-                                        </small>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php else: ?>
-                    <p class="text-muted">Vous n’avez encore aucune habitude. <a href="/habits/create">Créez-en une maintenant</a>.</p>
-                <?php endif; ?>
-            </div>
         </div>
     </div>
 </div>
